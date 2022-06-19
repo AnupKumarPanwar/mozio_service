@@ -38,3 +38,29 @@ class TestGetAllServiceAreasByProvider(TestCase):
         serializer = ServiceAreaSerializer(service_areas, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestCreateServiceArea(TestCase):
+    """
+    Test for adding a new service area for a provider
+    """
+
+    def setUp(self):
+        self.provider = Provider.objects.create(
+            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+
+        self.valid_payload = {
+            'name': 'Area 1',
+            'price': 3.5,
+            'polygon': [[0, 0], [0, 50], [50, 50], [50, 0], [0, 0]],
+            'provider_id': self.provider.pk,
+        }
+
+    def test_valid_create_service_area(self):
+        response = client.post(
+            reverse('get_post_service_areas', kwargs={
+                'provider_id': self.provider.pk}),
+            data=json.dumps(self.valid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
