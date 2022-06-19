@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Provider, ServiceArea
 from .serializers import ProviderSerializer, ServiceAreaSerializer
 from rest_framework import status
+from django.contrib.gis.geos import Polygon
 
 
 @api_view(['GET', 'POST'])
@@ -52,8 +53,18 @@ def get_post_service_areas(request, provider_id):
         service_areas = ServiceArea.objects.filter(provider_id=provider_id)
         serializer = ServiceAreaSerializer(service_areas, many=True)
         return Response(serializer.data)
-    else:
-        return Response({})
+    elif request.method == 'POST':
+        data = {
+            'name': request.data.get('name'),
+            'price': request.data.get('price'),
+            'polygon': Polygon(tuple(map(tuple, request.data.get('polygon')))),
+            'provider': provider_id,
+        }
+        serializer = ServiceAreaSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
