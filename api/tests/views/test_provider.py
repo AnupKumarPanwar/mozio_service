@@ -132,3 +132,24 @@ class TestUpdateProvider(TestCase):
             data=json.dumps(self.invalid_payload),
             content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteProviderTest(TestCase):
+    """ Test for deleting a provider """
+
+    def setUp(self):
+        self.provider_1 = Provider.objects.create(
+            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+        self.provider_2 = Provider.objects.create(
+            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+
+    def test_valid_delete_provider(self):
+        response = client.delete(
+            reverse('get_delete_update_provider', kwargs={'pk': self.provider_1.pk}))
+        self.assertEqual(len(Provider.objects.all()), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_invalid_delete_provider(self):
+        response = client.delete(
+            reverse('get_delete_update_provider', kwargs={'pk': 213}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
