@@ -7,7 +7,6 @@ from ...serializers import ServiceAreaSerializer
 from django.contrib.gis.geos import Polygon
 
 
-# initialize the APIClient app
 client = Client()
 
 
