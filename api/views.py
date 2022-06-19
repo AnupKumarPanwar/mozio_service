@@ -12,7 +12,18 @@ def get_post_providers(request):
         serializer = ProviderSerializer(providers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     if request.method == 'POST':
-        return Response({})
+        data = {
+            'name': request.data.get('name'),
+            'email': request.data.get('email'),
+            'phone': request.data.get('phone'),
+            'lang': request.data.get('lang'),
+            'currency': request.data.get('currency')
+        }
+        serializer = ProviderSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
