@@ -18,9 +18,17 @@ class TestGetAllProviders(TestCase):
         Method that runs before every test
         """
         Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
     def test_get_all_providers(self):
         """
@@ -74,13 +82,24 @@ class TestGetProiver(TestCase):
 
     def setUp(self):
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
     def test_valid_get_provider(self):
         response = client.get(
-            reverse('get_delete_update_provider', kwargs={'pk': self.provider_1.pk}))
+            reverse(
+                'get_delete_update_provider',
+                kwargs={
+                    'pk': self.provider_1.pk}))
         provider = Provider.objects.get(pk=self.provider_1.pk)
         serializer = ProviderSerializer(provider)
         self.assertEqual(response.data, serializer.data)
@@ -97,9 +116,17 @@ class TestUpdateProvider(TestCase):
 
     def setUp(self):
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
         self.valid_payload = {
             'name': 'Provider 1',
@@ -139,13 +166,24 @@ class DeleteProviderTest(TestCase):
 
     def setUp(self):
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
     def test_valid_delete_provider(self):
         response = client.delete(
-            reverse('get_delete_update_provider', kwargs={'pk': self.provider_1.pk}))
+            reverse(
+                'get_delete_update_provider',
+                kwargs={
+                    'pk': self.provider_1.pk}))
         self.assertEqual(len(Provider.objects.all()), 1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

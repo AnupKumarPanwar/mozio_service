@@ -18,9 +18,17 @@ class TestCheckServiceArea(TestCase):
         Method that runs before every test
         """
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
         ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
             ((0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0), (0.0, 0.0))), provider=self.provider_1)

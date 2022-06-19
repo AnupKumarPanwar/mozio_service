@@ -20,9 +20,17 @@ class TestGetAllServiceAreasByProvider(TestCase):
         Method that runs before every test
         """
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456799', lang='EN', currency='USD')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456799',
+            lang='EN',
+            currency='USD')
 
         ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
             ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_1)
@@ -46,7 +54,11 @@ class TestCreateServiceArea(TestCase):
 
     def setUp(self):
         self.provider = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
 
         self.valid_payload = {
             'name': 'Area 1',
@@ -89,10 +101,18 @@ class TestGetServiceArea(TestCase):
 
     def setUp(self):
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
 
         self.provider_2 = Provider.objects.create(
-            name='Provider 1', email='p2@gmail.com', phone='+91123456780', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p2@gmail.com',
+            phone='+91123456780',
+            lang='EN',
+            currency='INR')
 
         self.service_area = ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
             ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_1)
@@ -101,8 +121,12 @@ class TestGetServiceArea(TestCase):
         """
         Valid test case
         """
-        response = client.get(reverse('get_delete_update_service_areas', kwargs={
-                              'provider_id': self.provider_1.pk, 'pk': self.service_area.pk}))
+        response = client.get(
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider_1.pk,
+                    'pk': self.service_area.pk}))
         serializer = NestedServiceAreaSerializer(self.service_area)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -111,8 +135,12 @@ class TestGetServiceArea(TestCase):
         """
         Should return unauthorised because the service area does not belongs to the provider
         """
-        response = client.get(reverse('get_delete_update_service_areas', kwargs={
-                              'provider_id': self.provider_2.pk, 'pk': self.service_area.pk}))
+        response = client.get(
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider_2.pk,
+                    'pk': self.service_area.pk}))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
@@ -123,7 +151,11 @@ class TestUpdateServiceArea(TestCase):
 
     def setUp(self):
         self.provider = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
 
         self.service_area = ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
             ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider)
@@ -148,9 +180,13 @@ class TestUpdateServiceArea(TestCase):
         Valid test case
         """
         response = client.put(
-            reverse('get_delete_update_service_areas', kwargs={
-                    'provider_id': self.provider.pk, 'pk': self.service_area.pk}),
-            data=json.dumps(self.valid_payload),
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider.pk,
+                    'pk': self.service_area.pk}),
+            data=json.dumps(
+                self.valid_payload),
             content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -160,9 +196,13 @@ class TestUpdateServiceArea(TestCase):
         Fails because first and last element of the polygon are not same
         """
         response = client.put(
-            reverse('get_delete_update_service_areas', kwargs={
-                    'provider_id': self.provider.pk, 'pk': self.service_area.pk}),
-            data=json.dumps(self.invalid_payload),
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider.pk,
+                    'pk': self.service_area.pk}),
+            data=json.dumps(
+                self.invalid_payload),
             content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -175,13 +215,21 @@ class TestDeleteServiceArea(TestCase):
 
     def setUp(self):
         self.provider_1 = Provider.objects.create(
-            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+            name='Provider 1',
+            email='p1@gmail.com',
+            phone='+91123456789',
+            lang='EN',
+            currency='INR')
 
         self.service_area_1 = ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
             ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_1)
 
         self.provider_2 = Provider.objects.create(
-            name='Provider 2', email='p2@gmail.com', phone='+91123456788', lang='EN', currency='INR')
+            name='Provider 2',
+            email='p2@gmail.com',
+            phone='+91123456788',
+            lang='EN',
+            currency='INR')
 
         self.service_area_2 = ServiceArea.objects.create(name="Area 2", price=4.2, polygon=Polygon(
             ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_2)
@@ -191,8 +239,11 @@ class TestDeleteServiceArea(TestCase):
         Successfully deletes the service area
         """
         response = client.delete(
-            reverse('get_delete_update_service_areas', kwargs={
-                    'provider_id': self.provider_1.pk, 'pk': self.service_area_1.pk}),
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider_1.pk,
+                    'pk': self.service_area_1.pk}),
             content_type='application/json')
 
         self.assertEqual(len(ServiceArea.objects.all()), 1)
@@ -214,8 +265,11 @@ class TestDeleteServiceArea(TestCase):
         Fails beacuse service area does not belong to the prvider
         """
         response = client.delete(
-            reverse('get_delete_update_service_areas', kwargs={
-                    'provider_id': self.provider_1.pk, 'pk': self.service_area_2.pk}),
+            reverse(
+                'get_delete_update_service_areas',
+                kwargs={
+                    'provider_id': self.provider_1.pk,
+                    'pk': self.service_area_2.pk}),
             content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

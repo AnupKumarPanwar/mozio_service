@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 
+
 class Provider(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)

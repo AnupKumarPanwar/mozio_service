@@ -12,16 +12,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Provider',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+            name='Provider', fields=[
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('phone', models.CharField(max_length=15, unique=True)),
                 ('lang', models.CharField(max_length=5)),
                 ('currency', models.CharField(max_length=3)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-            ],
-        ),
-    ]
+                ('updated_at', models.DateTimeField(auto_now=True)), ], ), ]
