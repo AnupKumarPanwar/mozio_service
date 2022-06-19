@@ -14,3 +14,12 @@ class ServiceAreaSerializer(GeoFeatureModelSerializer):
         model = ServiceArea
         geo_field = "polygon"
         fields = '__all__'
+
+
+class NestedServiceAreaSerializer(GeoFeatureModelSerializer):
+    provider = ProviderSerializer()
+
+    class Meta:
+        model = ServiceArea
+        geo_field = "polygon"
+        fields = '__all__'

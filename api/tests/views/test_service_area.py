@@ -3,7 +3,7 @@ from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
 from ...models import Provider, ServiceArea
-from ...serializers import ServiceAreaSerializer
+from ...serializers import NestedServiceAreaSerializer, ServiceAreaSerializer
 from django.contrib.gis.geos import Polygon
 
 
@@ -34,7 +34,7 @@ class TestGetAllServiceAreasByProvider(TestCase):
         response = client.get(reverse('get_post_service_areas', kwargs={
                               'provider_id': self.provider_1.pk}))
         service_areas = ServiceArea.objects.filter(provider=self.provider_1)
-        serializer = ServiceAreaSerializer(service_areas, many=True)
+        serializer = NestedServiceAreaSerializer(service_areas, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -103,7 +103,7 @@ class TestGetServiceArea(TestCase):
         """
         response = client.get(reverse('get_delete_update_service_areas', kwargs={
                               'provider_id': self.provider_1.pk, 'pk': self.service_area.pk}))
-        serializer = ServiceAreaSerializer(self.service_area)
+        serializer = NestedServiceAreaSerializer(self.service_area)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

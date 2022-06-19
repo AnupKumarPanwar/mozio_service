@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Provider, ServiceArea
-from .serializers import ProviderSerializer, ServiceAreaSerializer
+from .serializers import NestedServiceAreaSerializer, ProviderSerializer, ServiceAreaSerializer
 from rest_framework import status
 from django.contrib.gis.geos import Polygon, Point
 
@@ -51,7 +51,7 @@ def get_delete_update_provider(request, pk):
 def get_post_service_areas(request, provider_id):
     if request.method == 'GET':
         service_areas = ServiceArea.objects.filter(provider_id=provider_id)
-        serializer = ServiceAreaSerializer(service_areas, many=True)
+        serializer = NestedServiceAreaSerializer(service_areas, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         try:
@@ -80,7 +80,7 @@ def get_delete_update_service_areas(request, provider_id, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ServiceAreaSerializer(service_area)
+        serializer = NestedServiceAreaSerializer(service_area)
         return Response(serializer.data)
     elif request.method == 'PUT':
         try:
@@ -106,7 +106,6 @@ def get_delete_update_service_areas(request, provider_id, pk):
 def check_service_areas(request):
     lat = float(request.GET['lat'])
     lng = float(request.GET['lng'])
-    print(lat, lng)
     point = Point(lat, lng)
     service_areas = ServiceArea.objects.select_related(
         'provider').filter(polygon__contains=point)
