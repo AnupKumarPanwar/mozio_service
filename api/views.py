@@ -97,5 +97,6 @@ def get_delete_update_service_areas(request, provider_id, pk):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response({})
+    elif request.method == 'DELETE':
+        service_area.delete()
+        return Response(status=status.HTTP_200_OK)
