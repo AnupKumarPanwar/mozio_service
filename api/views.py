@@ -28,4 +28,12 @@ def get_post_providers(request):
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def get_delete_update_provider(request, pk):
-    return Response({})
+    if request.method == 'GET':
+        try:
+            provider = Provider.objects.get(pk=pk)
+        except Provider.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ProviderSerializer(provider)
+        return Response(serializer.data)
+    else:
+        return Response({})
