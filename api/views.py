@@ -44,3 +44,13 @@ def get_delete_update_provider(request, pk):
     elif request.method == 'DELETE':
         provider.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+def get_post_service_areas(request, provider_id):
+    return Response({})
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def get_delete_update_service_areas(request, provider_id, pk):
+    return Response({})

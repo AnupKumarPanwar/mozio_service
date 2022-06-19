@@ -11,5 +11,15 @@ urlpatterns = [
         r'^api/providers/$',
         views.get_post_providers,
         name='get_post_providers'
-    )
+    ),
+    re_path(
+        r'^api/service_areas/(?P<provider_id>[0-9]+)$',
+        views.get_post_service_areas,
+        name='get_post_service_areas'
+    ),
+    re_path(
+        r'^api/service_areas/(?P<provider_id>[0-9]+)/(?P<pk>[0-9]+)$',
+        views.get_delete_update_service_areas,
+        name='get_delete_update_service_areas'
+    ),
 ]
