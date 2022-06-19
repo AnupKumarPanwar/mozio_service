@@ -34,8 +34,23 @@ Create postgis extension.
 CREATE EXTENSION postgis;
 ```
 
-
 ### Step 3
+
+Installing Geospatial libraries
+
+```
+https://docs.djangoproject.com/en/4.0/ref/contrib/gis/install/geolibs/
+```
+
+### Step 4
+
+Run tests
+
+```shell script
+python manage.py test
+```
+
+### Step 5
 
 Run server
 
