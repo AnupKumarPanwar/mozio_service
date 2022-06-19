@@ -81,3 +81,37 @@ class TestCreateServiceArea(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class TestGetServiceArea(TestCase):
+    """
+    Test to get service area by id
+    """
+
+    def setUp(self):
+        self.provider_1 = Provider.objects.create(
+            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+
+        self.provider_2 = Provider.objects.create(
+            name='Provider 1', email='p2@gmail.com', phone='+91123456780', lang='EN', currency='INR')
+
+        self.service_area = ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
+            ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_1)
+
+    def test_get_sevice_area(self):
+        """
+        Test for GET all providers
+        """
+        response = client.get(reverse('get_delete_update_service_areas', kwargs={
+                              'provider_id': self.provider_1.pk, 'pk': self.service_area.pk}))
+        serializer = ServiceAreaSerializer(self.service_area)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_unauthorized_get_sevice_area(self):
+        """
+        Test for GET all providers
+        """
+        response = client.get(reverse('get_delete_update_service_areas', kwargs={
+                              'provider_id': self.provider_2.pk, 'pk': self.service_area.pk}))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

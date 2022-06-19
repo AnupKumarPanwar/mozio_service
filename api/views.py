@@ -72,4 +72,15 @@ def get_post_service_areas(request, provider_id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def get_delete_update_service_areas(request, provider_id, pk):
-    return Response({})
+    try:
+        service_area = ServiceArea.objects.get(pk=pk)
+        if service_area.provider_id != int(provider_id):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    except ServiceArea.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    if request.method == 'GET':
+        serializer = ServiceAreaSerializer(service_area)
+        return Response(serializer.data)
+    else:
+        return Response({})
