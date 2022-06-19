@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Provider
-from .serializers import ProviderSerializer
+from .models import Provider, ServiceArea
+from .serializers import ProviderSerializer, ServiceAreaSerializer
 from rest_framework import status
 
 
@@ -48,7 +48,12 @@ def get_delete_update_provider(request, pk):
 
 @api_view(['GET', 'POST'])
 def get_post_service_areas(request, provider_id):
-    return Response({})
+    if request.method == 'GET':
+        service_areas = ServiceArea.objects.filter(provider_id=provider_id)
+        serializer = ServiceAreaSerializer(service_areas, many=True)
+        return Response(serializer.data)
+    else:
+        return Response({})
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
