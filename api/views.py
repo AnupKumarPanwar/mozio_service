@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import Provider, ServiceArea
 from .serializers import ProviderSerializer, ServiceAreaSerializer
 from rest_framework import status
-from django.contrib.gis.geos import Polygon
+from django.contrib.gis.geos import Polygon, Point
 
 
 @api_view(['GET', 'POST'])
@@ -104,4 +104,11 @@ def get_delete_update_service_areas(request, provider_id, pk):
 
 @api_view(['GET'])
 def check_service_areas(request):
-    return Response({})
+    lat = float(request.GET['lat'])
+    lng = float(request.GET['lng'])
+    print(lat, lng)
+    point = Point(lat, lng)
+    service_areas = ServiceArea.objects.select_related(
+        'provider').filter(polygon__contains=point)
+    serializer = ServiceAreaSerializer(service_areas, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
