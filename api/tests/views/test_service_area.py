@@ -56,6 +56,14 @@ class TestCreateServiceArea(TestCase):
             'provider_id': self.provider.pk,
         }
 
+        # first and last points in the polyon must be same
+        self.invalid_payload = {
+            'name': 'Area 1',
+            'price': 3.5,
+            'polygon': [[0, 0], [0, 50], [50, 50], [50, 0], [1, 0]],
+            'provider_id': self.provider.pk,
+        }
+
     def test_valid_create_service_area(self):
         response = client.post(
             reverse('get_post_service_areas', kwargs={
@@ -64,3 +72,12 @@ class TestCreateServiceArea(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_invalid_create_service_area(self):
+        response = client.post(
+            reverse('get_post_service_areas', kwargs={
+                'provider_id': self.provider.pk}),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

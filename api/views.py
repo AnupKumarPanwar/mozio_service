@@ -54,12 +54,15 @@ def get_post_service_areas(request, provider_id):
         serializer = ServiceAreaSerializer(service_areas, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        data = {
-            'name': request.data.get('name'),
-            'price': request.data.get('price'),
-            'polygon': Polygon(tuple(map(tuple, request.data.get('polygon')))),
-            'provider': provider_id,
-        }
+        try:
+            data = {
+                'name': request.data.get('name'),
+                'price': request.data.get('price'),
+                'polygon': Polygon(tuple(map(tuple, request.data.get('polygon')))),
+                'provider': provider_id,
+            }
+        except Exception as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         serializer = ServiceAreaSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
