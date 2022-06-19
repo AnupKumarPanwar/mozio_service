@@ -11,6 +11,8 @@ def get_post_providers(request):
         providers = Provider.objects.all()
         serializer = ProviderSerializer(providers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == 'POST':
+        return Response({})
 
 
 @api_view(['GET', 'DELETE', 'PUT'])

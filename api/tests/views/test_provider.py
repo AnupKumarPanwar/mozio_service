@@ -1,3 +1,4 @@
+import json
 from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -30,3 +31,40 @@ class TestGetAllProviders(TestCase):
         serializer = ProviderSerializer(providers, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestCreateProvider(TestCase):
+    """ Test module for creating a new provider """
+
+    def setUp(self):
+        self.valid_payload = {
+            'name': 'Provider 1',
+            'email': 'p1@gmail.com',
+            'phone': '+911234567890',
+            'lang': 'EN',
+            'currency': 'INR'
+        }
+        self.invalid_payload = {
+            'name': 'Provider 2',
+            'email': '',
+            'phone': '+911234567891',
+            'lang': 'EN',
+            'currency': 'USD'
+        }
+
+    def test_valid_create_provider(self):
+        response = client.post(
+            reverse('get_post_providers'),
+            data=json.dumps(self.valid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_provider(self):
+        response = client.post(
+            reverse('get_post_providers'),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
