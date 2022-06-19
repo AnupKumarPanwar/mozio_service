@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "3a2ea74d-fd8d-4ef0-9345-10fd78504ff0",
+		"name": "mozio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8276053"
+	},
+	"item": [
+		{
+			"name": "Get all providers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/providers/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get provider by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/providers/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"providers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update provider",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Provider 1\",\n    \"email\": \"p1@gmail.com\",\n    \"phone\": \"+911234567891\",\n    \"currency\": \"INR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/providers/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"providers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete provider",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Provider 1\",\n    \"email\": \"p1@gmail.com\",\n    \"phone\": \"+911234567891\",\n    \"currency\": \"INR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/providers/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"providers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create provider",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Provider 1\",\n    \"email\": \"p1@gmail.com\",\n    \"phone\": \"+911234567890\",\n    \"lang\": \"EN\",\n    \"currency\": \"INR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/providers/",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all service areas of a provider",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Provider 1\",\n    \"email\": \"p1@gmail.com\",\n    \"phone\": \"+911234567891\",\n    \"lang\": \"EN\",\n    \"currency\": \"INR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/service_areas/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"service_areas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create service area",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Area 1\",\n    \"price\": 1.2,\n    \"polygon\": [[0, 0], [0, 50], [50, 50], [50, 0], [0, 0]]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/service_areas/11",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"service_areas",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get service area by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Area 2\",\n    \"price\": 2.1,\n    \"polygon\": [[0, 0], [0, 50], [50, 50], [50, 0], [0, 0]]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/service_areas/1/3",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"service_areas",
+						"1",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update service area",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Area 11\",\n    \"price\": 2.1,\n    \"polygon\": [[10, 0], [0, 50], [50, 50], [50, 0], [10, 0]]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/service_areas/1/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"service_areas",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete service area",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/service_areas/1/1",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"service_areas",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check services areas containing a point",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Area 11\",\n    \"price\": 2.1,\n    \"polygon\": [[0, 0], [0, 50], [50, 50], [50, 0], [0, 0]]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mozio_service_host}}:{{mozio_service_port}}/api/check?lat=5&lng=5",
+					"protocol": "http",
+					"host": [
+						"{{mozio_service_host}}"
+					],
+					"port": "{{mozio_service_port}}",
+					"path": [
+						"api",
+						"check"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "5"
+						},
+						{
+							"key": "lng",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "mozio_service_port",
+			"value": "8000"
+		},
+		{
+			"key": "mozio_service_host",
+			"value": "localhost"
+		}
+	]
+}

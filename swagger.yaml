@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Swagger Mozio Service
+  title: Swagger Petstore
  
 host: 127.0.0.1:8000
 basePath: /api
