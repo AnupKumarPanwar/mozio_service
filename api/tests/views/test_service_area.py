@@ -167,3 +167,56 @@ class TestUpdateServiceArea(TestCase):
             content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class TestDeleteServiceArea(TestCase):
+    """
+    Test to delete service area
+    """
+
+    def setUp(self):
+        self.provider_1 = Provider.objects.create(
+            name='Provider 1', email='p1@gmail.com', phone='+91123456789', lang='EN', currency='INR')
+
+        self.service_area_1 = ServiceArea.objects.create(name="Area 1", price=1.2, polygon=Polygon(
+            ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_1)
+
+        self.provider_2 = Provider.objects.create(
+            name='Provider 2', email='p2@gmail.com', phone='+91123456788', lang='EN', currency='INR')
+
+        self.service_area_2 = ServiceArea.objects.create(name="Area 2", price=4.2, polygon=Polygon(
+            ((0.0, 0.0), (0.0, 50.0), (50.0, 50.0), (50.0, 0.0), (0.0, 0.0))), provider=self.provider_2)
+
+    def test_valid_delete_sevice_area(self):
+        """
+        Successfully deletes the service area
+        """
+        response = client.delete(
+            reverse('get_delete_update_service_areas', kwargs={
+                    'provider_id': self.provider_1.pk, 'pk': self.service_area_1.pk}),
+            content_type='application/json')
+
+        self.assertEqual(len(ServiceArea.objects.all()), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_invalid_delete_sevice_area(self):
+        """
+        Service area not found
+        """
+        response = client.delete(
+            reverse('get_delete_update_service_areas', kwargs={
+                    'provider_id': self.provider_1.pk, 'pk': 123}),
+            content_type='application/json')
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_unauthorized_delete_sevice_area(self):
+        """
+        Fails beacuse service area does not belong to the prvider
+        """
+        response = client.delete(
+            reverse('get_delete_update_service_areas', kwargs={
+                    'provider_id': self.provider_1.pk, 'pk': self.service_area_2.pk}),
+            content_type='application/json')
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
