@@ -22,4 +22,9 @@ urlpatterns = [
         views.get_delete_update_service_areas,
         name='get_delete_update_service_areas'
     ),
+    re_path(
+        r'^api/check$',
+        views.check_service_areas,
+        name='check_service_areas'
+    ),
 ]

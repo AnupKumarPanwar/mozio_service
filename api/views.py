@@ -100,3 +100,8 @@ def get_delete_update_service_areas(request, provider_id, pk):
     elif request.method == 'DELETE':
         service_area.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def check_service_areas(request):
+    return Response({})
