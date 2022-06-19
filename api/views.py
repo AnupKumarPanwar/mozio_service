@@ -78,9 +78,24 @@ def get_delete_update_service_areas(request, provider_id, pk):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
     except ServiceArea.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
     if request.method == 'GET':
         serializer = ServiceAreaSerializer(service_area)
         return Response(serializer.data)
+    elif request.method == 'PUT':
+        try:
+            data = {
+                'name': request.data.get('name'),
+                'price': request.data.get('price'),
+                'polygon': Polygon(tuple(map(tuple, request.data.get('polygon')))),
+                'provider': provider_id,
+            }
+        except Exception as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+        serializer = ServiceAreaSerializer(service_area, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({})
